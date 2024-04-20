@@ -5,7 +5,7 @@ import { Repository } from 'typeorm'
 import { UserRepositoryInterface } from '../interface/user.interface'
 import bcrypt from 'bcrypt'
 
-export class UserRepository implements UserRepositoryInterface {
+export class UserTypeOrmRepository implements UserRepositoryInterface {
   private userRepository: Repository<User>
   constructor() {
     this.userRepository = AppDataSource.getRepository(User)

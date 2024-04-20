@@ -5,12 +5,19 @@ import { CreateUserController } from './controllers/user/createUser.controller'
 import { AuthLoginControllers } from './controllers/user/authUserController.controller'
 import { UpdateUserController } from './controllers/user/updateUser.controller'
 import { DeleteUserController } from './controllers/user/deleteUser.controller'
+import { UserTypeOrmRepository } from './repositories/user.repositoris'
 
-const getUserController = new GetUserController()
-const createUserController = new CreateUserController()
-const authUserController = new AuthLoginControllers()
-const updateUserController = new UpdateUserController()
-const deleteUserController = new DeleteUserController()
+const getUserController = new GetUserController(new UserTypeOrmRepository())
+const createUserController = new CreateUserController(
+  new UserTypeOrmRepository(),
+)
+const authUserController = new AuthLoginControllers(new UserTypeOrmRepository())
+const updateUserController = new UpdateUserController(
+  new UserTypeOrmRepository(),
+)
+const deleteUserController = new DeleteUserController(
+  new UserTypeOrmRepository(),
+)
 
 export {
   createUserController,

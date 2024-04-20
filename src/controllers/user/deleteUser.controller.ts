@@ -1,17 +1,14 @@
 import { Request, Response } from 'express'
-import { UserRepository } from '../../repositories/user.repositoris'
+import { UserRepositoryInterface } from '../../interface/user.interface'
 
 export class DeleteUserController {
-  private userRepository: UserRepository
-
-  constructor() {
-    this.userRepository = new UserRepository()
-  }
+  // eslint-disable-next-line no-useless-constructor
+  constructor(private userTypeOrmRepository: UserRepositoryInterface) {}
 
   public async deleteUser(request: Request, response: Response) {
     const { id } = request.params
     try {
-      await this.userRepository.deleteUserRepository(id)
+      await this.userTypeOrmRepository.deleteUserRepository(id)
       response.status(201).json({ message: 'data deleted successfully' })
     } catch (erro) {
       console.log(erro)

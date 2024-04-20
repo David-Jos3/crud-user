@@ -2,19 +2,16 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import 'dotenv/config'
 import { Request, Response } from 'express'
-import { UserRepository } from '../../repositories/user.repositoris'
+import { UserRepositoryInterface } from '../../interface/user.interface'
 
 export class AuthLoginControllers {
-  private userRepository: UserRepository
-
-  constructor() {
-    this.userRepository = new UserRepository()
-  }
+  // eslint-disable-next-line no-useless-constructor
+  constructor(private userTypeOrmRepository: UserRepositoryInterface) {}
 
   public async authLoginUser(request: Request, response: Response) {
     const { email, password } = request.body
     try {
-      const user = await this.userRepository.getByEmailRepository(email)
+      const user = await this.userTypeOrmRepository.getByEmailRepository(email)
       const passwordCompare = await bcrypt.compareSync(password, user.password)
 
       if (!passwordCompare) {

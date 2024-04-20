@@ -1,19 +1,16 @@
 import { Request, Response } from 'express'
-import { UserRepository } from '../../repositories/user.repositoris'
+import { UserRepositoryInterface } from '../../interface/user.interface'
 
 export class GetUserController {
-  private userRepository: UserRepository
-
-  constructor() {
-    this.userRepository = new UserRepository()
-  }
+  // eslint-disable-next-line no-useless-constructor
+  constructor(private userTypeOrmRepository: UserRepositoryInterface) {}
 
   public async findAllUser(
     _request: Request,
     response: Response,
   ): Promise<void> {
     try {
-      const users = await this.userRepository.findAllRepository()
+      const users = await this.userTypeOrmRepository.findAllRepository()
       response.json(users)
     } catch (error) {
       console.error(error)
